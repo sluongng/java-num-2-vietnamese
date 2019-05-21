@@ -1,1 +1,11 @@
+# IntelliJ
+.idea
+
+# VS Code
+.vscode
+
+# Vim
+*.swp
+
+# Java compilation
 *.class
