@@ -29,3 +29,12 @@ If you are using this, please leave a comment inside Github Issue to let me know
 
 Any Pull Request to improve this would be more than welcome.
 
+## Project setup 
+
+Project was written in 
+
+- NeoVim
+- Coc.nvim 
+- Coc-Java 
+- Eclipse Java LSP https://github.com/eclipse/eclipse.jdt.ls/
+
