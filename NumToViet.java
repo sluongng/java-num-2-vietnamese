@@ -1,10 +1,10 @@
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Arrays;
 import java.util.List;
 
 public class NumToViet {
-
   private static final List<String> digitsName = new ArrayList<String>() {
     private static final long serialVersionUID = 1L;
     {
@@ -22,7 +22,7 @@ public class NumToViet {
   };
 
   private static final List<String> thousandsName = new ArrayList<String>() {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     {
       add("");
       add("nghìn");
@@ -45,6 +45,25 @@ public class NumToViet {
     if (num < 0L) {
       return "âm " + num2String(-num);
     }
+
+    String str = Long.valueOf(num).toString();
+
+    // zero padding in front of string to prepare for splitting
+    switch (str.length() % 3) {
+      case 1:
+        str = "00" + str;
+        break;
+      case 2:
+        str = "0" + str;
+        break;
+      default:
+        break;
+    }
+
+    // Split into chunks of 3 digits each
+    List<String> groupOfThousand =  Arrays.asList(str.split("(?<=\\G.{3}"));
+
+    System.out.println(str);
 
     thousandsName.get(1);
 
