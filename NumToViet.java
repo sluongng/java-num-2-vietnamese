@@ -1,38 +1,33 @@
-import java.util.HashMap;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class NumToViet {
-  private static final List<String> digitsName = new ArrayList<String>() {
-    private static final long serialVersionUID = 1L;
-    {
-      add("không");
-      add("một");
-      add("hai");
-      add("ba");
-      add("bốn");
-      add("năm");
-      add("sáu");
-      add("bảy");
-      add("tám");
-      add("chín");
-    }
-  };
+  // Static
+  private static final List<String> digitsName = Arrays.asList(
+    "không",
+    "một",
+    "hai",
+    "ba",
+    "bốn",
+    "năm",
+    "sáu",
+    "bảy",
+    "tám",
+    "chín"
+  );
 
-  private static final List<String> thousandsName = new ArrayList<String>() {
-    private static final long serialVersionUID = 2L;
-    {
-      add("");
-      add("nghìn");
-      add("triệu");
-      add("tỷ");
-      add("nghìn tỷ");
-      add("triệu tỷ");
-      add("tỷ tỷ");
-    }
-  };
+  private static final List<String> thousandsName = Arrays.asList(
+    "",
+    "nghìn",
+    "triệu",
+    "tỷ",
+    "nghìn tỷ",
+    "triệu tỷ",
+    "tỷ tỷ"
+  );
 
   // Algorithm section
 
@@ -50,43 +45,39 @@ public class NumToViet {
 
     // zero padding in front of string to prepare for splitting
     switch (str.length() % 3) {
-      case 1:
-        str = "00" + str;
-        break;
-      case 2:
-        str = "0" + str;
-        break;
-      default:
-        break;
+    case 1:
+      str = "00" + str;
+      break;
+    case 2:
+      str = "0" + str;
+      break;
+    default:
+      break;
     }
 
     // Split into chunks of 3 digits each
-    List<String> groupOfThousand =  Arrays.asList(str.split("(?<=\\G.{3}"));
+    List<String> groupOfThousand = Arrays.asList(str.split("(?<=\\G.{3})"));
 
-    System.out.println(str);
+    // TODO: remove Debug
+    System.out.println("Group size is" + groupOfThousand.size());
 
     thousandsName.get(1);
 
     return digitsName.get(1);
   }
 
-  // Test section
-
-  private static final Map<Long, String> testCase = new HashMap<Long, String>() {
-    private static final long serialVersionUID = 9999L;
-
-    {
-      put(0L, "không");
-      put(1L, "một");
-      put(-1L, "âm một");
-      put(10L, "mười");
-      put(100L, "một trăm");
-
-      put(1_000L, "một nghìn");
-    }
-  };
-
   public static void main(String[] args) {
+    
+    // Test section
+    Map<Long, String> testCase = new HashMap<>();
+    testCase.put(0L, "không");
+    testCase.put(1L, "một");
+    testCase.put(-1L, "âm một");
+    testCase.put(10L, "mười");
+    testCase.put(100L, "một trăm");
+    testCase.put(1_000L, "một nghìn");
+    
+    // Execute tests
     Boolean result = testCase.entrySet().stream().map(entry -> {
       String vietString = num2String(entry.getKey());
 
@@ -100,6 +91,7 @@ public class NumToViet {
       return comparision;
     }).reduce(Boolean.TRUE, (a, b) -> a && b);
 
+    // Final report
     if (result) {
       System.out.println("Finished testing!");
     } else {
