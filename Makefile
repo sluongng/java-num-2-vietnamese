@@ -1,6 +1,8 @@
 COMPILE=javac
 EXECUTE=java
 
+all: compile run clean
+
 compile:
 	${COMPILE} NumToViet.java
 
@@ -9,3 +11,4 @@ run: compile
 
 clean:
 	rm -f *.class
+
