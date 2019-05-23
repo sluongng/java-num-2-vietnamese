@@ -21,6 +21,24 @@ Its common in Vietnam to accept anything smaller than 1 VND to be nelegible.
 ```shell
 # Compile and run the main() method
 >javac NumToViet.java && java NumToViet
+
+# Or use provided Makefile
+> make
+javac NumToViet.java
+java NumToViet
+[Passed] result: |0| - |không|
+Group size is1
+[Passed] result: |-1| - |âm một|
+Group size is1
+[Passed] result: |1| - |một|
+Group size is1
+[Failed] result: |một| expected |một trăm|
+Group size is2
+[Failed] result: |một| expected |một nghìn|
+Group size is1
+[Failed] result: |một| expected |mười|
+Some test(s) failed!
+rm -f *.class
 ```
 
 ## Support
