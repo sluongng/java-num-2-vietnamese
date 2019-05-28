@@ -2,34 +2,27 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class NumToViet {
-  // Static
-  private static final List<String> digitsName = Arrays.asList(
-    "không",
-    "một",
-    "hai",
-    "ba",
-    "bốn",
-    "năm",
-    "sáu",
-    "bảy",
-    "tám",
-    "chín"
-  );
 
-  private static final List<String> thousandsName = Arrays.asList(
-    "",
-    "nghìn",
-    "triệu",
-    "tỷ",
-    "nghìn tỷ",
-    "triệu tỷ",
-    "tỷ tỷ"
-  );
+  // Static
+  private static final List<String> digitsName = Arrays.asList("không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy",
+      "tám", "chín");
+
+  private static final List<String> thousandsName = Arrays.asList("", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ",
+      "tỷ tỷ");
 
   // Algorithm section
+
+  private static String decorateTriple(String triplet) {
+    // TODO
+    return triplet;
+  }
+
+  private static String readTriple(String triplet) {
+    // TODO
+    return triplet;
+  }
 
   public static String num2String(long num) {
 
@@ -58,16 +51,37 @@ public class NumToViet {
     // Split into chunks of 3 digits each
     List<String> groupOfThousand = Arrays.asList(str.split("(?<=\\G.{3})"));
 
-    // TODO: remove Debug
-    System.out.println("Group size is" + groupOfThousand.size());
+    boolean showZeroHundred = doShowZeroHundred(groupOfThousand);
+
+    groupOfThousand.stream()
+      .map(showZeroHundred 
+          ? NumToViet::readTriple 
+          : NumToViet::readTriple)
+      .map(NumToViet::decorateTriple);
 
     thousandsName.get(1);
 
     return digitsName.get(1);
   }
 
+  /**
+   * determine whether to show zero-hundred text
+   * @param groupOfThousand number represented in group of 3 digits of each 1000^n
+   * @return a boolean
+   */
+  private static boolean doShowZeroHundred(List<String> groupOfThousand) {
+    int count = 0;
+    int i = groupOfThousand.size() - 1;
+    while (i > 1 && !groupOfThousand.get(i).equals("000")) {
+      count++;
+    }
+
+    return count < groupOfThousand.size() - 1;
+  }
+
+
   public static void main(String[] args) {
-    
+
     // Test section
     Map<Long, String> testCase = new HashMap<>();
     testCase.put(0L, "không");
@@ -76,7 +90,7 @@ public class NumToViet {
     testCase.put(10L, "mười");
     testCase.put(100L, "một trăm");
     testCase.put(1_000L, "một nghìn");
-    
+
     // Execute tests
     Boolean result = testCase.entrySet().stream().map(entry -> {
       String vietString = num2String(entry.getKey());
