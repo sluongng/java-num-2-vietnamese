@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class NumToViet {
 
@@ -19,9 +20,53 @@ public class NumToViet {
     return triplet;
   }
 
-  private static String readTriple(String triplet) {
+  /**
+   * turn triplet digits into vietnamese words
+   * @param triplet a string of 3 digit integer
+   * @param showZeroHundred whether to show Zero hundred
+   * @return vietnamese string represent the input number
+   */
+  private static String readTriple(String triplet, boolean showZeroHundred) {
+    List<Integer> digitList = stringToInt(triplet);
+
+    int a = digitList.get(0);
+    int b = digitList.get(1);
+    int c = digitList.get(2);
+    
+    if (a == 0) {
+      if (b == 0 && c == 0) {
+        return "";
+      }
+
+      if (showZeroHundred) {
+        return "không trăm " + readPair(b, c);
+      }
+      
+      if (b == 0) {
+        return digitsName.get(c);
+      } else {
+        return readPair(b, c);
+      }
+
+    }
+
+    return digitsName.get(a) + " trăm " + readPair(b, c);
+  }
+
+  private static String readPair(int b, int c) {
     // TODO
-    return triplet;
+    return "";
+  }
+
+  private static List<Integer> stringToInt(String triplet) {
+     return triplet.chars()
+      .map(NumToViet::charToInt)
+      .boxed()
+      .collect(Collectors.toList());
+  }
+
+  private static int charToInt(int c) {
+    return c - '0';
   }
 
   public static String num2String(long num) {
@@ -54,9 +99,7 @@ public class NumToViet {
     boolean showZeroHundred = doShowZeroHundred(groupOfThousand);
 
     groupOfThousand.stream()
-      .map(showZeroHundred 
-          ? NumToViet::readTriple 
-          : NumToViet::readTriple)
+      .map(triplet -> readTriple(triplet, showZeroHundred))
       .map(NumToViet::decorateTriple);
 
     thousandsName.get(1);
