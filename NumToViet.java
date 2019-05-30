@@ -112,7 +112,10 @@ public class NumToViet {
   }
 
   private static List<Integer> stringToInt(String triplet) {
-    return triplet.chars().map(NumToViet::charToInt).boxed().collect(Collectors.toList());
+    return triplet.chars()
+      .map(NumToViet::charToInt)
+      .boxed()
+      .collect(Collectors.toList());
   }
 
   private static int charToInt(int c) {
