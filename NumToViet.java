@@ -2,6 +2,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class NumToViet {
@@ -31,11 +32,6 @@ public class NumToViet {
   );
 
   // Algorithm section
-
-  private static String decorateTriple(String triplet) {
-    // TODO
-    return triplet;
-  }
 
   /**
    * turn triplet digits into vietnamese words
@@ -151,16 +147,16 @@ public class NumToViet {
 
     boolean showZeroHundred = doShowZeroHundred(groupOfThousand);
 
-    List<String> numString = groupOfThousand.stream().map(triplet -> readTriple(triplet, showZeroHundred))
-        .collect(Collectors.toList());
+    AtomicInteger index = new AtomicInteger();
+    String result = groupOfThousand.stream()
+      .map(triplet -> readTriple(triplet, showZeroHundred))
+      .map(vnString -> vnString + " " + thousandsName.get(groupOfThousand.size() - 1 - index.getAndIncrement()))
+      .map(string -> string.replaceAll("\\s+", " "))
+      .map(String::trim)
+      .reduce((a, b) -> a + b)
+      .orElse("error");
 
-    // Reducing the result with thousand-padding in between
-    for (int i = numString.size() - 1; i >= 0; i--) {
-      // TODO
-      System.out.println("Each NumString is | " + numString.get(i));
-    }
-
-    return numString.get(0);
+    return result;
   }
 
   /**
