@@ -149,13 +149,14 @@ public class NumToViet {
     boolean showZeroHundred = doShowZeroHundred(groupOfThousand);
 
     AtomicInteger index = new AtomicInteger();
-    String result = groupOfThousand.stream().map(triplet -> readTriple(triplet, showZeroHundred))
-      .map(vnString -> vnString.isEmpty() 
-        ? vnString
-        : vnString + " " + thousandsName.get(groupOfThousand.size() - 1 - index.getAndIncrement())
+    String result = groupOfThousand.stream()
+      .map(triplet -> readTriple(triplet, showZeroHundred && index.get() > 0))
+      .map(vnString -> vnString.trim().isEmpty() 
+        ? "" 
+        : vnString + " " + thousandsName.get(groupOfThousand.size() - 1 - index.get())
       )
-      .reduce((a, b) -> a + " " + b)
-      .orElse("error")
+      .peek(s -> index.getAndIncrement())
+      .collect(Collectors.joining(" "))
       .replaceAll("\\s+", " ")
       .trim();
 
