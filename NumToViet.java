@@ -407,7 +407,7 @@ public class NumToViet {
 
     // Execute tests
     AtomicInteger passed = new AtomicInteger();
-		Boolean result = testCase.entrySet().stream().map(entry -> {
+    Boolean result = testCase.entrySet().stream().map(entry -> {
       String vietString = num2String(entry.getKey());
 
       boolean comparision = entry.getValue().equalsIgnoreCase(vietString);
