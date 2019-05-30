@@ -150,8 +150,9 @@ public class NumToViet {
 
     AtomicInteger index = new AtomicInteger();
     String result = groupOfThousand.stream().map(triplet -> readTriple(triplet, showZeroHundred))
-      .map(vnString -> vnString 
-        + " " + thousandsName.get(groupOfThousand.size() - 1 - index.getAndIncrement())
+      .map(vnString -> vnString.isEmpty() 
+        ? vnString
+        : vnString + " " + thousandsName.get(groupOfThousand.size() - 1 - index.getAndIncrement())
       )
       .reduce((a, b) -> a + " " + b)
       .orElse("error")
@@ -404,13 +405,15 @@ public class NumToViet {
     testCase.put(2_000_000L,"Hai triệu");
 
     // Execute tests
+    AtomicInteger passed = new AtomicInteger();
 		Boolean result = testCase.entrySet().stream().map(entry -> {
       String vietString = num2String(entry.getKey());
 
-      boolean comparision = entry.getValue().equals(vietString);
+      boolean comparision = entry.getValue().equalsIgnoreCase(vietString);
       if (!comparision) {
         System.out.println(String.format("[Failed] result: |%s| expected |%s|", vietString, entry.getValue()));
       } else {
+        passed.getAndIncrement();
         System.out.println(String.format("[Passed] result: |%d| - |%s|", entry.getKey(), entry.getValue()));
       }
 
@@ -418,9 +421,8 @@ public class NumToViet {
     }).reduce(Boolean.TRUE, (a, b) -> a && b);
 
     // Final report
-    if (result) {
-      System.out.println("Finished testing!");
-    } else {
+    System.out.println("Test passed: " + passed.get() + "/" + testCase.size());
+    if (!result) {
       System.out.println("Some test(s) failed!");
     }
   }
