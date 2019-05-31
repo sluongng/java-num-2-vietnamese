@@ -196,6 +196,9 @@ public class NumToViet {
     testCase.put(100L, "một trăm");
     testCase.put(1_000L, "một nghìn");
     testCase.put(-55L,"Âm năm mươi lăm");
+    testCase.put(21L, "hai mươi mốt");
+    testCase.put(315L, "ba trăm mười lăm");
+    testCase.put(316L, "ba trăm mười sáu");
     testCase.put(-1_055L,"Âm một nghìn không trăm năm mươi lăm");
     testCase.put(101_002_101_000_000_000L,"Một trăm lẻ một triệu tỷ không trăm lẻ hai nghìn tỷ một trăm lẻ một tỷ");
     testCase.put(100_000_000_000L,"Một trăm tỷ");
