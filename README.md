@@ -14,7 +14,7 @@ So this is a POC to convert numbers in Long format to String Vietnamese text in 
 Vietnamese currency is most common to be used in "thousands" unit.
 E.g. 500 VND is the smallest paper bill, 1000 or 2000 VND is the most common bill still in circulation at the time of writting this.
 It does not make a lot of sense to support decimal places since most of the calculation result will have left over numbers placed within the 1000 VND margin.
-Its common in Vietnam to accept anything smaller than 1 VND to be nelegible.
+Its common in Vietnam to accept that anything smaller than 1 VND to be nelegible.
 
 ## Testing
 
@@ -55,4 +55,12 @@ Project was written in
 - Coc.nvim 
 - Coc-Java 
 - Eclipse Java LSP https://github.com/eclipse/eclipse.jdt.ls/
+
+## Improvement
+
+This library is just a Proof of Concepts. When use in production, there are several points that you can improve upon.
+
+- Apply Guava: Instead of using `AtomicInteger` as a psuedo-index, you can use `Streams.mapWithIndex()` from Guava to make your code cleaner
+
+- Recheck the logic of `doShowZeroHundred()`: the logic was copied from the kotlin version of the code. Personally I think this logic is a bit clunky and could be shortened/simplified somehow. Given the exist test cases as baseline, you can modify this logic to make the code easier to understand.
 
